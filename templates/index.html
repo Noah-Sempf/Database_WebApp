@@ -3,9 +3,31 @@
 {% extends 'base.html' %}
 
 {% block body %}
+{% if movies %}
+	<h2> Ratings </h2>
+		<table>
+			<thead>
+				<tr>
+					<th>ID</th>
+					<th>Movie</th>
+					<th>Rating</th>
+					<th>Lead Actor/Actress First Name</th>
+					<th>Lead Actor/Actress Last Name</th>
+				</tr>
+			</thead>
 
-	<h2> This is my Flask server! </h2>
-
-	<img src="{{ url_for('static', filename='images/flask.jpg') }}" />
-
+			<tbody>
+				{% for row in movies %}
+				<tr>
+					<td> {{ row.MovieID }}</td>
+					<td> {{ row.Movie_name }}</td>
+					<td> {{ row.Movie_rating }}</td>
+					<td> {{ row.first_name }}</td>
+					<td> {{ row.last_name }}</td>
+				</tr>
+				{% endfor %}
+			</tbody>
+		</table>
+	
+{% endif %}
 {% endblock %}
