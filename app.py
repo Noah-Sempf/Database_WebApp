@@ -14,7 +14,7 @@ app.config['SECRET_KEY']='SuperSecretKey'
 app.config['SQLALCHEMY_DATABASE_URI'] = conn
 db = SQLAlchemy(app)
 
-class sempf_ratingapp(db.Model):
+class sempf_moiveapp(db.Model):
     MovieID = db.Column(db.Integer, primary_key=True)
     Movie_name = db.Column(db.String(255))
     Movie_rating = db.Column(db.String(255))
@@ -34,14 +34,14 @@ class MovieForm(FlaskForm):
 
 @app.route('/')
 def index():
-    all_movies = sempf_ratingapp.query.all()
+    all_movies = sempf_moiveapp.query.all()
     return render_template('index.html', movies = all_movies, pageTitle="Noah's Movie Ratings")
 
 @app.route('/add_movie', methods=['GET', 'POST'])
 def add_movie():
     form = MovieForm()
     if form.validate_on_submit():
-        Movie = sempf_ratingapp(Movie_name=form.Movie_name.data, Movie_rating=form.Movie_rating.data, first_name=form.first_name.data, last_name=form.last_name.data)
+        Movie = sempf_moiveapp(Movie_name=form.Movie_name.data, Movie_rating=form.Movie_rating.data, first_name=form.first_name.data, last_name=form.last_name.data)
         db.session.add(Movie)
         db.session.commit()
 
