@@ -1,5 +1,6 @@
 from flask import Flask
-from flask import render_template
+from flask import request
+from flask import render_template, redirect
 from flask_wtf import FlaskForm
 from wtforms import StringField
 from wtforms.validators import DataRequired
@@ -45,9 +46,19 @@ def add_movie():
         db.session.add(Movie)
         db.session.commit()
 
-        return "<h2> The movie {0} stars {1} {2} and I would rate it a {3}".format(form.Movie_name.data, form.first_name.data, form.last_name.data, form.Movie_rating.data)
+        return redirect('/')
  
-    return render_template('add_movie.html', form=form, pageTitle='Add a new movie') 
+    return render_template('add_movie.html', form=form, pageTitle='Add a new movie')
+
+@app.route('/delete_movie/<int:MovieID>', methods=['GET','POST'])
+def delete_movie(MovieID):
+    if request.method == 'POST':
+        Movie = sempf_moiveapp.query.get_or_404(MovieID)
+        db.session.delete(Movie)
+        db.session.commit()
+        return redirect("/")
+    else:
+        return redirect("/")
 
 if __name__ == '__main__':
     app.run(debug=True)
