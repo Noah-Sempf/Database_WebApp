@@ -39,6 +39,17 @@ def index():
     all_movies = sempf_moiveapp.query.all()
     return render_template('index.html', movies = all_movies, pageTitle="Noah's Movie Ratings")
 
+@app.route('/search', methods=['GET', 'POST'])
+def search():
+    if request.method == 'POST':
+        form = request.form
+        search_value = form['search_string']
+        search = "%{0}%".format(search_value)
+        results = sempf_moiveapp.query.filter(sempf_moiveapp.Movie_name.like(search)).all()
+        return render_template('index.html', movies=results, pageTitle='Noah\'s Movie Ratings', legend="Search Results")
+    else:
+        return redirect('/')
+
 @app.route('/add_movie', methods=['GET', 'POST'])
 def add_movie():
     form = MovieForm()
