@@ -12,4 +12,5 @@ __pycache__/
 *.py[cod]
 *$py.class
 
+secrets.py/
 secrets.py

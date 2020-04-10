@@ -1,0 +1,22 @@
+{% extends 'base.html' %}
+{% block body %}
+<div>
+    <p><a href="{{url_for('index')}}"> Home </a></p>
+    <h3>{{ legend }}</h3>
+   
+    
+    <form method="POST" action="">
+
+        {{ form.csrf_token }}
+        {{ form.MovieID.label }} {{ form.MovieID }}
+        {{ form.Movie_name.label }} {{ form.Movie_name }}
+        {{ form.Movie_rating.label }} {{ form.Movie_rating }}
+        {{ form.first_name.label }} {{ form.first_name }}
+        {{ form.last_name.label }} {{ form.last_name }}
+
+        <input type="submit" formaction="{{url_for('update_movie', MovieID=form.MovieID)}}" value="Update">
+        <input type="submit" formaction="{{url_for('delete_movie', MovieID=form.MovieID)}}" value="Delete">
+    </form>
+</div>
+
+{% endblock %}

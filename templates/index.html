@@ -3,7 +3,16 @@
 {% extends 'base.html' %}
 
 {% block body %}
+
+<form method="POST">
+	<input type="text" autofocus="autofocus" name="search_string">
+	<input type="submit" formaction="/search" value="Search">
+</form>
+
+	<h3>{{ legend }}</h3>
+
 <p> <a href="{{ url_for('.add_movie')}}">Add a New Movie</a></p>
+
 {% if movies %}
 	<h2> Ratings </h2>
 		<table>
@@ -20,15 +29,14 @@
 			<tbody>
 				{% for row in movies %}
 				<tr>
-					<td> {{ row.MovieID }}</td>
 					<td> {{ row.Movie_name }}</td>
 					<td> {{ row.Movie_rating }}</td>
 					<td> {{ row.first_name }}</td>
 					<td> {{ row.last_name }}</td>
 
 					<td>
-						<form action="{{ url_for('delete_movie', MovieID=row.MovieID) }}" Method="POST">
-							<input type="submit" value="Delete" />
+						<form action="{{ url_for('get_movie', MovieID=row.MovieID) }}" Method="POST">
+							<input type="submit" value="Details" />
 						</form>
 					</td>
 					
