@@ -1,8 +1,8 @@
-from flask import Flask
+from flask import Flask, url_for
 from flask import request
 from flask import render_template, redirect
 from flask_wtf import FlaskForm
-from wtforms import StringField
+from wtforms import StringField, IntegerField, SubmitField
 from wtforms.validators import DataRequired
 from flask_sqlalchemy import SQLAlchemy
 import pymysql
@@ -27,6 +27,7 @@ class sempf_moiveapp(db.Model):
 
 
 class MovieForm(FlaskForm):
+    MovieID = IntegerField('MovieID:')
     Movie_name = StringField('Movie:', validators=[DataRequired()])
     Movie_rating = StringField('Rating:', validators=[DataRequired()])
     first_name = StringField('Lead Actor/Actress First Name:', validators=[DataRequired()])
@@ -59,6 +60,34 @@ def delete_movie(MovieID):
         return redirect("/")
     else:
         return redirect("/")
+
+
+@app.route('/movie/<int:MovieID>', methods=['GET','POST'])
+def get_movie(MovieID):
+    Movie = sempf_moiveapp.query.get_or_404(MovieID)
+    return render_template('movie.html', form=Movie, pageTitle='Movie Details', legend="Movie Details")
+
+
+@app.route('/movie/<int:MovieID>/update', methods=['GET', 'POST'])
+def update_movie(MovieID):
+    Movie = sempf_moiveapp.query.get_or_404(MovieID)
+    form = MovieForm()
+
+    if form.validate_on_submit():
+        Movie.Movie_name = form.Movie_name.data
+        Movie.Movie_rating = form.Movie_rating.data
+        Movie.first_name = form.first_name.data
+        Movie.last_name = form.last_name.data
+        db.session.commit()
+        return redirect(url_for('get_movie', MovieID=Movie.MovieID))
+    form.MovieID.data = Movie.MovieID
+    form.Movie_name.data = Movie.Movie_name
+    form.Movie_rating.data = Movie.Movie_rating
+    form.first_name.data = Movie.first_name
+    form.last_name.data = Movie.last_name
+    return render_template('update_movie.html', form=form, pageTitle='Update Movie', legend="Update a movie")
+
+
 
 if __name__ == '__main__':
     app.run(debug=True)
