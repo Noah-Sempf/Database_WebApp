@@ -9,6 +9,7 @@ import pymysql
 #import secrets
 import os
 
+
 dbuser = os.environ.get('DBUSER')
 dbpass = os.environ.get('DBPASS')
 dbhost = os.environ.get('DBHOST')
@@ -37,8 +38,8 @@ class MovieForm(FlaskForm):
     MovieID = IntegerField('MovieID:')
     Movie_name = StringField('Movie:', validators=[DataRequired()])
     Movie_rating = StringField('Rating:', validators=[DataRequired()])
-    first_name = StringField('Lead Actor/Actress First Name:', validators=[DataRequired()])
-    last_name = StringField('Lead Actor/Actress Last Name:', validators=[DataRequired()])
+    first_name = StringField('Lead First Name: ', validators=[DataRequired()])
+    last_name = StringField('Lead Last Name: ', validators=[DataRequired()])
 
 
 @app.route('/')
