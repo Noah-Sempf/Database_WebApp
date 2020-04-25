@@ -8,11 +8,13 @@
     <form method="POST" action="">
 
         {{ form.csrf_token }}
-        {{ form.MovieID.label }} {{ form.MovieID }}
-        {{ form.Movie_name.label }} {{ form.Movie_name }}
-        {{ form.Movie_rating.label }} {{ form.Movie_rating }}
-        {{ form.first_name.label }} {{ form.first_name }}
-        {{ form.last_name.label }} {{ form.last_name }}
+        <ul class="list-group">
+            <li class="list-group-item active">{{ form.Movie_name }}</li>
+            <li class="list-group-item">{{ form.Movie_rating }}</li>
+            <li class="list-group-item">{{ form.first_name }}</li>
+            <li class="list-group-item">{{ form.last_name }}</li>
+          </ul>
+
 
         <input type="submit" formaction="{{url_for('update_movie', MovieID=form.MovieID)}}" value="Update">
         <input type="submit" formaction="{{url_for('delete_movie', MovieID=form.MovieID)}}" value="Delete">
